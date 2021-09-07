@@ -10,16 +10,41 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
+  var sender = TextEditingController();
+  var password = TextEditingController();
+  var recipent = TextEditingController();
+  var subject = TextEditingController();
+  var ccRecipent= TextEditingController();
+  var  bccRecipent= TextEditingController();
+  var text = TextEditingController();
+  var html = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-            child: SignInButton(
-          Buttons.Google,
-          onPressed: () async {
-            sendMessage();
-          },
+            child: Column(
+          children: [
+            TextField(
+                decoration: InputDecoration(hintText: "Enter sender's mail id"),
+                controller: sender),
+            TextField(
+                obscureText: true,
+                decoration:
+                    InputDecoration(hintText: "Enter sender's mail password"),
+                controller: password),
+            TextField(
+              decoration: InputDecoration(hintText: "Recipent"),
+              controller: recipent,
+            ),
+            TextField(decoration: InputDecoration(hintText: "Message")),
+            ElevatedButton(
+                onPressed: () async {
+                  sendMessage();
+                },
+                child: Text("Send message"))
+          ],
         )),
       ),
     );
@@ -59,13 +84,12 @@ class MyApp extends StatelessWidget {
     await connection.send(message);
 
     Fluttertoast.showToast(
-        msg: "This is Center Short Toast",
+        msg: "Message is sent",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
 }
